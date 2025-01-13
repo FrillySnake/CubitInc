@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Cubit Inc</title>
+		<meta content="doodoo" property="og:url" />
+		<link rel="stylesheet" type="text/css" href="interface.css" />
+		<style>
+			.hidden-text {
+				color: white;
+				background-color: white;
+				word-wrap: break-word;
+				font-size: 50%;
+			}
+			.hidden-text::selection {
+				background-color: yellow;
+				color: black;
+			}
+		</style>
+	</head>
+	<body>
+		<div>Cubit Inc(remental) made by FrillySnake<br>
+		This is mainly a test game, so it's pretty short and not very well-built.</div>
+		<div class="hidden-text">Hmm... were you hoping to find a secret? I'm afraid I don't have any for you here... Maybe the next hidden text does? They won't be as easy to find as I was though.</div>
+		<br>
+		<!--<div>You are currently generating every <span id="genRate">1</span> second<span id="genRatePlural"></span>.<div><br>-->
+		<div id="divCubits">
+			<div id="divCubitAmt"><span id="cubits">0</span> cubits<br>Regular old cubits. They don't do anything... or do they?<br>
+			<button onClick="cubitAdd(1)">Obtain a cubit</button></div>
+		</div>
+		<br>
+		<div id="divQubits">
+			<div id="divQubitAmt" style="display: none"><span id="qubits">0</span> qubits<br>Qubits add themselves to your cubits.<br></div>
+			<div id="divQubitButton"><button onClick="formQubit()">Conglomerate your cubits into a qubit.<br>Costs <span id="qubitCost">10</span> cubits</button></div>
+		</div>
+		<br>
+		<div id="divKubits" style="display: none">
+			<div id="divKubitAmt" style="display: none"><span id="kubits">0</span> kubits<br>Kubits add themselves to your qubits.<br></div>
+			<div id="divKubitButton"><button onClick="formKubit()">Conglomerate your qubits into a kubit.<br>Costs <span id="kubitCost">10</span> qubits</button></div>
+		</div>
+		<br>
+		<div id="divUnstableCubits" style="display: none">
+			<div id="divUnstableCubitAmt" style="display: none"><span id="unstableCubits">-1</span>/<span id="unstableCubitCap">10</span> unstable cubits<br>Unstable cubits grow over time and can be spent on upgrades. Be warned though, too many of them at once may be dangerous!<br></div>
+			<div id="divUnstableCubitButton"><button onClick="formUnstableCubit()"><b>Destabilize</b><br>Amalgamate all of your cubits, qubits, and kubits into an unstable cubit, disintegrating just as easily as it grows.<br>Requires at least 10 kubits, 100 qubits, and 1000 cubits</button></div>
+			<div id="divUnstableUpgrade1" style="display: none"><button onClick="unstableUpgrade1()">Increase unstable cubit cap<br>Costs <span id="unstableUpgrade1Cost">10</span> unstable cubits</button></div>
+			<div id="divUnstableUpgrade2" style="display: none"><button onClick="unstableUpgrade2()">Increase base unstable cubit generation<br>Costs <span id="unstableUpgrade2Cost">5</span> unstable cubits</button></div>
+			<div id="divUnstableUpgrade3" style="display: none"><button onClick="unstableUpgrade3()">Increase cubit generation<br>Costs <span id="unstableUpgrade3Cost">2</span> unstable cubits</button></div>
+			<div id="divUnstableUpgrade4" style="display: none"><button onClick="unstableUpgrade4()">Increase qubit generation<br>Costs <span id="unstableUpgrade4Cost">4</span> unstable cubits</button></div>
+			<div id="divUnstableUpgrade5" style="display: none"><button id="divUnstableButton5" onClick="unlockTemporal()">Unlock the next reset in this layer<br>Costs 1000 unstable cubits</button></div>
+		</div>
+		<br>
+		<div id="divTempQubits" style="display: none">
+			<div id="divTempQubitAmt" style="display: none"><span id="tempQubits">0</span> temporal qubits<br>Temporal qubits can be used to enhance the flow of time...<br></div>
+			<div id="divTempQubitButton"><button onClick="formTempQubit()"><b>Temporalize</b><br>Compress a large amount of qubits and unstable cubits into a temporal qubit, capable of manipulating time.<br>You will earn <span id="nextTempQubits">0</span> temporal qubits on next temporalize<br>Requires <span id="tempQubitCost1">1000</span> qubits and <span id="tempQubitCost2">1000</span> unstable cubits for next temporal qubit</button><br></div>
+			<div id="divTempUpgrade1" style="display: none"><button onClick="tempUpgrade1()">Double generation rate<br>Costs <span id="tempUpgrade1Cost">1</span> temporal qubits</button></div>
+			<div id="divTempUpgrade2" style="display: none"><button onClick="tempUpgrade2()">Forming qubits no longer spends cubits<br>Costs 3 temporal qubits</button></div>
+			<div id="divTempUpgrade3" style="display: none"><button onClick="tempUpgrade3()">Forming kubits no longer spends qubits<br>Costs 5 temporal qubits</button></div>
+			<div id="divTempUpgrade4" style="display: none"><button onClick="unlockUniversal()">Unlock the final reset in this layer<br>Costs 10 temporal qubits</button></div>
+		</div>
+		<br>
+		<div id="divUnivKubits" style="display: none">
+			<div id="divUnivKubitAmt" style="display: none"><span id="univKubits">0</span> universal kubits<br>Universal kubits cannot be spent but have powerful milestones!<br></div>
+			<div id="divUnivKubitButton"><button onClick="formUnivKubit()"><b>Universalize</b><br>Collide huge amounts of kubits, unstable cubits, and temporal qubits together to attain a universal kubit, with the power to reform the universe.<br>Requires <span id="univKubitCost1"> </span> kubits, <span id="univKubitCost2"> </span> unstable cubits, and <span id="univKubitCost3"> </span> temporal qubits</button><br></div>
+			<div id="divUnivMile1" style="display: none"><button disabled>Milestone 1<br>Keep generation rate upgrades. Applies retroactively<br>Requires 1 universal kubit</button></div>
+			<div id="divUnivMile2" style="display: none"><button disabled>Milestone 2<br>x2 cubit and qubit generation per Universal milestone<br>Requires 2 universal kubits</button></div>
+			<div id="divUnivMile3" style="display: none"><button disabled>Milestone 3<br>Automate qubit and kubit formation<br>Requires 3 universal kubits</button></div>
+			<div id="divUnivMile4" style="display: none"><button disabled>Milestone 4<br>Keep Temporalize upgrades 2 and 3 on Universalize<br>Requires 4 universal kubits</button></div>
+			<div id="divUnivMile5" style="display: none"><button disabled>Milestone 5<br>Destabilize no longer resets anything<br>Requires 7 universal kubits</button></div>
+			<div id="divUnivMile6" style="display: none"><button disabled>Milestone 6<br>Temporalize no longer resets anything<br>Requires 10 universal kubits</button></div>
+			<div id="divUnivMile7" style="display: none"><button disabled>Milestone 7<br>Unlock the next reset layer & x10 to all previous currencies<br>Requires 15 universal kubits</button></div>
+			<!--<div id="divUnivMile8" style="display: none"><button disabled>Milestone 8<br>Unlock the final reset of the next layer<br>Requires 50 universal kubits</button></div>-->
+		</div>
+		<br>
+		<div id="divAscCubits" style="display: none">
+			<div id="divAscCubitAmt" style="display: none"><span id="ascCubits">0</span> ascended cubits<br>Ascended cubits behave much like unstable cubits, though they are less destructive. Boosts to unstable cubits also apply to ascended cubits!</div>
+			<div id="divAscCubitButton" style="display: none"><button onClick="formAscCubit()">Utilize the power of temporal qubits and universal kubits to purify unstable cubits into an ascended cubit, harnessing the might of the heavens...<br>Requires _ unstable cubits, _ temporal qubits, and _ universal kubits</button></div>
+		</div>
+		<br>
+		<div id="divDimQubits" style="display: none">
+			<div id="divDimQubitAmt" style="display: none"><span id="dimQubits">0</span> dimensional qubits<br>Dimensional qubits are extremely powerful, providing the ability to gather boosts from different dimensions!</div>
+			<div id="divDimQubitButton" style="display: none"><button onClick="formDimQubit()">Focus the heavenly powers of ascended cubits onto temporal qubits to further empower them into a dimensional qubit, shattering the bounds of reality...<br>Requires </button></div>
+		</div>
+		<br>
+		<div id="divOmniKubits" style="display: none">
+			<div id="divOmniKubitAmt" style="display: none"><span id="omniKubits">0</span> omniversal kubits<br>Omniversal kubits are the be all and end all. Each omniversal kubit is bound to a previous cubit, powering it infinitely.</div>
+			<div id="divOmniKubitButton" style="display: none"><button onClick="formOmniKubit()">Concentrate universal kubits using ascended cubits and dimensional qubits to craft an omniversal kubit, securing full control of all of cubic existence and nonexistence.<br>Requires </button></div>
+		</div>
+		<br>
+		<div id="end" style="display: none">
+			<div id="gameEnd" style="display: none"><button onClick="endGame()">All 8 omniversal kubits have been attained. No cubit remains outside of your control. Only one option left.<br>Form the Hypercubit.</button></div>
+			<div id="theEnd" style="display: none">Congratulations! You finished Cubit Inc(remental).<br>Playtime: <span id="playTime">0</span></div>
+		</div>
+		<br>
+		<div><button onClick="save()">Save</button><br>Data is autosaved every 30 seconds. You can change or disable this:</div>
+		<div><button onClick="eraseData()">Reset Data</button></div>
+		<div id="divEraseData" style="display: none"><b>Warning: This will erase ALL of your data. Continue?</b><br><button onClick="eraseDataYes()">Yes</button> <button onClick="eraseDataNo()">No</button><div>
+		<script type="text/javascript" src="main.js"></script>
+		<!--<script>load();</script>-->
+	</body>
+</html>
